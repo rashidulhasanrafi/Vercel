@@ -1,5 +1,4 @@
 
-
 export enum TransactionType {
   INCOME = 'INCOME',
   EXPENSE = 'EXPENSE',
@@ -260,7 +259,10 @@ const EN_TRANSLATIONS = {
       analyzing: 'Thinking...',
       error: 'Could not retrieve insight at this moment.',
       apiError: 'I\'m having trouble analyzing your data right now. Please try again later.',
-      missingKey: 'API Key is missing.'
+      missingKey: 'API Key is missing.',
+      chatTitle: 'AI Financial Assistant',
+      chatWelcome: 'Hello! I am your personal financial assistant. How can I help you manage your money today?',
+      chatPlaceholder: 'Type your financial question...',
     },
     settings: {
       title: 'Settings',
@@ -441,7 +443,10 @@ const BN_TRANSLATIONS = {
       analyzing: 'ভাবছি...',
       error: 'এই মুহূর্তে পরামর্শ পাওয়া যাচ্ছে না।',
       apiError: 'আপনার তথ্য বিশ্লেষণ করতে সমস্যা হচ্ছে। অনুগ্রহ করে পরে আবার চেষ্টা করুন।',
-      missingKey: 'এপিআই কি (API Key) পাওয়া যায়নি।'
+      missingKey: 'এপিআই কি (API Key) পাওয়া যায়নি।',
+      chatTitle: 'এআই আর্থিক সহকারী',
+      chatWelcome: 'হ্যালো! আমি আপনার ব্যক্তিগত আর্থিক সহকারী। আমি আপনাকে কিভাবে সাহায্য করতে পারি?',
+      chatPlaceholder: 'আপনার আর্থিক প্রশ্নটি লিখুন...',
     },
     settings: {
       title: 'সেটিংস',
@@ -622,7 +627,10 @@ const DE_TRANSLATIONS = {
       analyzing: 'Nachdenken...',
       error: 'Konnte keinen Einblick erhalten.',
       apiError: 'Problem bei der Datenanalyse. Bitte später versuchen.',
-      missingKey: 'API-Schlüssel fehlt.'
+      missingKey: 'API-Schlüssel fehlt.',
+      chatTitle: 'KI Finanzassistent',
+      chatWelcome: 'Hallo! Ich bin dein persönlicher Finanzassistent. Wie kann ich dir heute helfen?',
+      chatPlaceholder: 'Stell eine Frage...',
     },
     settings: {
       title: 'Einstellungen',
@@ -803,7 +811,10 @@ const ES_TRANSLATIONS = {
       analyzing: 'Pensando...',
       error: 'No se pudo obtener consejo.',
       apiError: 'Error al analizar datos. Intenta más tarde.',
-      missingKey: 'Falta la clave API.'
+      missingKey: 'Falta la clave API.',
+      chatTitle: 'Asistente Financiero IA',
+      chatWelcome: '¡Hola! Soy tu asistente financiero personal. ¿Cómo puedo ayudarte hoy?',
+      chatPlaceholder: 'Escribe tu pregunta...',
     },
     settings: {
       title: 'Ajustes',
@@ -984,7 +995,10 @@ const FR_TRANSLATIONS = {
       analyzing: 'Réflexion...',
       error: 'Impossible d\'obtenir un conseil.',
       apiError: 'Erreur d\'analyse. Réessayez plus tard.',
-      missingKey: 'Clé API manquante.'
+      missingKey: 'Clé API manquante.',
+      chatTitle: 'Assistant Financier IA',
+      chatWelcome: 'Bonjour ! Je suis votre assistant financier personnel. Comment puis-je vous aider aujourd\'hui ?',
+      chatPlaceholder: 'Posez votre question...',
     },
     settings: {
       title: 'Paramètres',
@@ -1165,7 +1179,10 @@ const HI_TRANSLATIONS = {
       analyzing: 'सोच रहा हूँ...',
       error: 'सुझाव प्राप्त नहीं कर सका।',
       apiError: 'डेटा विश्लेषण में त्रुटि। कृपया बाद में प्रयास करें।',
-      missingKey: 'API कुंजी गायब है।'
+      missingKey: 'API कुंजी गायब है।',
+      chatTitle: 'AI वित्तीय सहायक',
+      chatWelcome: 'नमस्ते! मैं आपका व्यक्तिगत वित्तीय सहायक हूँ। मैं आज आपकी कैसे मदद कर सकता हूँ?',
+      chatPlaceholder: 'अपना वित्तीय प्रश्न लिखें...',
     },
     settings: {
       title: 'सेटिंग्स',
@@ -1239,7 +1256,7 @@ const HI_TRANSLATIONS = {
       shareMailDesc: 'ईमेल पर सारांश भेजें।'
     },
     calculator: {
-      title: 'कैलकुलेटर',
+      title: 'क্যালকুলেটর',
       copy: 'कॉपी',
       copied: 'कॉपी!',
       clear: 'AC',
@@ -1346,7 +1363,10 @@ const JA_TRANSLATIONS = {
       analyzing: '考え中...',
       error: 'ヒントを取得できませんでした。',
       apiError: '分析エラー。後でもう一度お試しください。',
-      missingKey: 'APIキーがありません。'
+      missingKey: 'APIキーがありません。',
+      chatTitle: 'AI金融アシスタント',
+      chatWelcome: 'こんにちは！あなたの個人用金融アシスタントです。今日はどのようなお手伝いができますか？',
+      chatPlaceholder: '金融に関する質問を入力...',
     },
     settings: {
       title: '設定',
