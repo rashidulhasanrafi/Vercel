@@ -197,7 +197,7 @@ export const CategorySettings: React.FC<Props> = ({
   const handleWhatsAppClick = async (e: React.MouseEvent) => {
     playClick();
     // Copy to clipboard immediately as backup (if app not installed)
-    await safeCopy("01570222989");
+    await safeCopy("+8801570222989");
   };
 
   const confirmDeleteCategory = () => {
@@ -519,14 +519,14 @@ export const CategorySettings: React.FC<Props> = ({
                           Developed by Rafi Hassan
                         </p>
                         <a 
-                          href="https://wa.me/01570222989" 
+                          href="https://wa.me/8801570222989" 
                           target="_blank" 
                           rel="noopener noreferrer"
                           onClick={handleWhatsAppClick}
                           className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full text-xs font-medium transition-all shadow-md hover:shadow-lg active:scale-95"
                         >
                           <MessageCircle size={14} />
-                          WhatsApp: 01570222989
+                          WhatsApp: +8801570222989
                         </a>
                     </div>
                 </div>
