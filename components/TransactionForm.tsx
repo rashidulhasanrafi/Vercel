@@ -362,7 +362,7 @@ export const TransactionForm: React.FC<Props> = ({
               <button
                 type="button"
                 onClick={handlePaste}
-                className="p-2.5 bg-slate-100/50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-lg text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition-all active:scale-95"
+                className="p-2.5 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg text-amber-600 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-all active:scale-95 shadow-sm"
                 title="Paste amount"
               >
                 <Clipboard size={20} />
@@ -406,7 +406,7 @@ export const TransactionForm: React.FC<Props> = ({
                     <div className="absolute z-[50] w-full mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-xl max-h-[250px] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
                         {getCategories(type).map(cat => (
                             <div 
-                                key={cat}
+                                key={cat} 
                                 onClick={() => { 
                                     setCategory(cat); 
                                     setShowCategoryDropdown(false); 
