@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hisab - Modern Expense Tracker</title>
+    <meta name="description" content="A modern, minimalist expense tracker (Hisab) featuring income/expense management, interactive visualizations, and AI-powered financial insights." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              slate: {
+                850: '#151f32', // Custom darker slate for cards
+              }
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              slideDown: {
+                '0%': { transform: 'translateY(-20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              scaleIn: {
+                '0%': { transform: 'scale(0.95)', opacity: '0' },
+                '100%': { transform: 'scale(1)', opacity: '1' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-5px)' },
+              },
+              pulseSoft: {
+                '0%, 100%': { opacity: '1' },
+                '50%': { opacity: '0.7' },
+              },
+              // New Animations for Splash Screen
+              popOutUp: {
+                '0%': { transform: 'translate(-50%, 0) scale(0)', opacity: '0' },
+                '20%': { opacity: '1', transform: 'translate(-50%, -40px) scale(1)' },
+                '100%': { transform: 'translate(-50%, -120px) scale(0.8)', opacity: '0' }
+              },
+              bookPulse: {
+                '0%, 100%': { transform: 'scale(1)', filter: 'brightness(1)' },
+                '50%': { transform: 'scale(1.05)', filter: 'brightness(1.2)' }
+              },
+              logoReveal: {
+                '0%': { transform: 'scale(0.5)', opacity: '0', filter: 'blur(10px)' },
+                '100%': { transform: 'scale(1)', opacity: '1', filter: 'blur(0)' }
+              }
+            },
+            animation: {
+              fadeIn: 'fadeIn 0.5s ease-out forwards',
+              slideUp: 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              slideDown: 'slideDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              scaleIn: 'scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              float: 'float 3s ease-in-out infinite',
+              pulseSoft: 'pulseSoft 2s ease-in-out infinite',
+              // Splash specific
+              popOutUp: 'popOutUp 2s ease-out forwards',
+              bookPulse: 'bookPulse 2s ease-in-out infinite',
+              logoReveal: 'logoReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      /* Custom Scrollbar for Webkit */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      .dark ::-webkit-scrollbar-thumb {
+        background: #475569;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.37.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "recharts": "https://esm.sh/recharts@^3.6.0",
+    "jspdf": "https://esm.sh/jspdf@^4.0.0",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "path": "https://esm.sh/path@^0.12.7",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.90.1"
+  }
+}
+</script>
+</head>
+  <body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-50 transition-colors duration-500 ease-in-out">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

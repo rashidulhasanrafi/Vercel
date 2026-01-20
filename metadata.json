@@ -1,0 +1,7 @@
+{
+  "name": "Hisab app vercel",
+  "description": "A modern, minimalist expense tracker (Hisab) featuring income/expense management, interactive visualizations, and AI-powered financial insights.",
+  "requestFramePermissions": [
+    "clipboard-read"
+  ]
+}
