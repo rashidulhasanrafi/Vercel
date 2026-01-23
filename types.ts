@@ -342,6 +342,16 @@ const EN_TRANSLATIONS = {
       clear: 'AC',
       error: 'Error'
     },
+    feedback: {
+      title: 'Feedback',
+      desc: 'Tell us what you think or report an issue.',
+      placeholder: 'Write your message here...',
+      rating: 'Rate your experience',
+      submit: 'Submit Feedback',
+      success: 'Thanks for your feedback!',
+      error: 'Failed to send feedback. Please try again.',
+      loading: 'Sending...'
+    },
     common: {
       soundOn: 'Sound On',
       soundOff: 'Sound Off',
@@ -525,6 +535,16 @@ const BN_TRANSLATIONS = {
       copied: 'কপি হয়েছে!',
       clear: 'AC',
       error: 'ত্রুটি'
+    },
+    feedback: {
+      title: 'মতামত',
+      desc: 'আপনার অভিজ্ঞতা জানান বা কোনো সমস্যা রিপোর্ট করুন।',
+      placeholder: 'আপনার বার্তাটি এখানে লিখুন...',
+      rating: 'আপনার রেটিং দিন',
+      submit: 'জমা দিন',
+      success: 'আপনার মতামতের জন্য ধন্যবাদ!',
+      error: 'মতামত পাঠানো সম্ভব হয়নি। আবার চেষ্টা করুন।',
+      loading: 'পাঠানো হচ্ছে...'
     },
     common: {
       soundOn: 'সাউন্ড চালু',
@@ -710,6 +730,16 @@ const DE_TRANSLATIONS = {
       clear: 'AC',
       error: 'Fehler'
     },
+    feedback: {
+      title: 'Feedback',
+      desc: 'Teilen Sie uns Ihre Meinung mit.',
+      placeholder: 'Ihre Nachricht...',
+      rating: 'Bewerten Sie uns',
+      submit: 'Senden',
+      success: 'Danke für Ihr Feedback!',
+      error: 'Fehler beim Senden.',
+      loading: 'Senden...'
+    },
     common: {
       soundOn: 'Ton an',
       soundOff: 'Ton aus',
@@ -893,6 +923,16 @@ const ES_TRANSLATIONS = {
       copied: '¡Copiado!',
       clear: 'AC',
       error: 'Error'
+    },
+    feedback: {
+      title: 'Comentarios',
+      desc: 'Cuéntanos tu experiencia.',
+      placeholder: 'Tu mensaje...',
+      rating: 'Califica tu experiencia',
+      submit: 'Enviar',
+      success: '¡Gracias por tus comentarios!',
+      error: 'Error al enviar.',
+      loading: 'Enviando...'
     },
     common: {
       soundOn: 'Sonido On',
@@ -1078,6 +1118,16 @@ const FR_TRANSLATIONS = {
       clear: 'AC',
       error: 'Erreur'
     },
+    feedback: {
+      title: 'Avis',
+      desc: 'Donnez-nous votre avis.',
+      placeholder: 'Votre message...',
+      rating: 'Notez votre expérience',
+      submit: 'Envoyer',
+      success: 'Merci pour votre avis !',
+      error: 'Erreur lors de l\'envoi.',
+      loading: 'Envoi...'
+    },
     common: {
       soundOn: 'Son On',
       soundOff: 'Son Off',
@@ -1256,11 +1306,21 @@ const HI_TRANSLATIONS = {
       shareMailDesc: 'ईमेल पर सारांश भेजें।'
     },
     calculator: {
-      title: 'क্যালকুলেটর',
+      title: 'ক্যালকুলেটর',
       copy: 'कॉपी',
       copied: 'कॉपी!',
       clear: 'AC',
       error: 'त्रुटि'
+    },
+    feedback: {
+      title: 'प्रतिक्रिया',
+      desc: 'हमें बताएं कि आप क्या सोचते हैं।',
+      placeholder: 'अपना संदेश लिखें...',
+      rating: 'अनुभव को रेट करें',
+      submit: 'जमा करें',
+      success: 'प्रतिक्रिया के लिए धन्यवाद!',
+      error: 'भेजने में विफल।',
+      loading: 'भेज रहा है...'
     },
     common: {
       soundOn: 'ध्वनि चालू',
@@ -1445,6 +1505,16 @@ const JA_TRANSLATIONS = {
       copied: 'コピー！',
       clear: 'AC',
       error: 'エラー'
+    },
+    feedback: {
+      title: 'フィードバック',
+      desc: 'ご意見をお聞かせください。',
+      placeholder: 'メッセージを入力...',
+      rating: '体験を評価する',
+      submit: '送信',
+      success: 'フィードバックをありがとうございました！',
+      error: '送信に失敗しました。',
+      loading: '送信中...'
     },
     common: {
       soundOn: '音オン',

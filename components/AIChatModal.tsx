@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { X, Send, Sparkles, User, Loader2, Bot } from 'lucide-react';
-import { TRANSLATIONS, Language, Transaction, DashboardStats } from '../types';
+import { TRANSLATIONS, Language, Transaction, DashboardStats, TransactionType } from '../types';
 import { callGeminiAI } from '../services/aiChatService';
 import { playSound } from '../utils/sound';
 
@@ -61,7 +61,7 @@ export const AIChatModal: React.FC<Props> = ({
     const userText = input.trim();
     setInput('');
     
-    // 1. Add user message to UI
+    // 1. Add user message locally
     const userMsg: Message = {
       id: Date.now().toString(),
       text: userText,
@@ -75,10 +75,9 @@ export const AIChatModal: React.FC<Props> = ({
 
     try {
       // 2. Call the custom REST API with the prompt
-      // We pass userText directly as requested
       const reply = await callGeminiAI(userText);
       
-      // 3. Add AI reply to UI
+      // 3. Add AI response locally from the 'reply' field
       const aiMsg: Message = {
         id: (Date.now() + 1).toString(),
         text: reply,
@@ -87,11 +86,10 @@ export const AIChatModal: React.FC<Props> = ({
       };
       setMessages(prev => [...prev, aiMsg]);
       if (soundEnabled) playSound('income');
-    } catch (err) {
-      // Handle error by showing the localized error message
+    } catch (err: any) {
       const errorMsg: Message = {
         id: (Date.now() + 1).toString(),
-        text: t.apiError,
+        text: `Unable to get a response. (${err.message || 'Network error'})`,
         sender: 'ai',
         timestamp: new Date()
       };
@@ -105,7 +103,7 @@ export const AIChatModal: React.FC<Props> = ({
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-md" onClick={onClose} />
       
-      <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl shadow-2xl w-full max-w-lg h-[80vh] relative z-10 flex flex-col animate-in zoom-in-95 duration-200 border border-white/20 dark:border-white/10 overflow-hidden">
+      <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl shadow-2xl w-full max-w-lg h-[80vh] relative z-10 flex flex-col animate-in zoom-in-95 duration-200 border border-white/20 dark:border-white/10 overflow-hidden transition-colors">
         
         {/* Header */}
         <div className="p-4 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between bg-indigo-600/10">
@@ -115,7 +113,7 @@ export const AIChatModal: React.FC<Props> = ({
             </div>
             <div>
               <h3 className="font-bold text-slate-800 dark:text-white">{t.chatTitle}</h3>
-              <p className="text-[10px] text-indigo-600 dark:text-indigo-400 font-semibold uppercase tracking-wider">AI Assistant</p>
+              <p className="text-[10px] text-indigo-600 dark:text-indigo-400 font-semibold uppercase tracking-wider">Cloud AI Assistant</p>
             </div>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full text-slate-500 dark:text-slate-400 transition-colors">
@@ -131,7 +129,7 @@ export const AIChatModal: React.FC<Props> = ({
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${msg.sender === 'user' ? 'bg-indigo-600 text-white' : 'bg-white dark:bg-slate-700 text-indigo-600 shadow-sm'}`}>
                   {msg.sender === 'user' ? <User size={16} /> : <Bot size={16} />}
                 </div>
-                <div className={`p-3 rounded-2xl text-sm leading-relaxed shadow-sm ${
+                <div className={`p-3 rounded-2xl text-sm leading-relaxed shadow-sm whitespace-pre-wrap ${
                   msg.sender === 'user' 
                     ? 'bg-indigo-600 text-white rounded-tr-none' 
                     : 'bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 rounded-tl-none border border-slate-100 dark:border-slate-600'

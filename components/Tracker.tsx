@@ -6,14 +6,13 @@ import { TransactionForm } from './TransactionForm';
 import { TransactionList } from './TransactionList';
 import { ExpenseChart } from './ExpenseChart';
 import { CalendarView } from './CalendarView';
-import { AISuggestion } from './AISuggestion';
-import { AIChatModal } from './AIChatModal';
 import { CategorySettings } from './CategorySettings';
 import { ShareModal } from './ShareModal';
 import { CalculatorModal } from './CalculatorModal';
 import { GoalModal } from './GoalModal';
 import { ProfileManager } from './ProfileManager';
-import { NotebookPen, Check, X, UserCircle, Calendar, PieChart, Sparkles } from 'lucide-react';
+import { FeedbackModal } from './FeedbackModal';
+import { NotebookPen, Check, X, UserCircle, Calendar, PieChart } from 'lucide-react';
 import { playSound } from '../utils/sound';
 import { supabase } from '../utils/supabase';
 
@@ -136,25 +135,6 @@ const CustomCategoryIcon = () => (
   </div>
 );
 
-const CustomAIChatIcon = () => (
-  <div className="w-10 h-10 relative drop-shadow-sm hover:scale-110 transition-transform">
-     <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-        <circle cx="24" cy="24" r="20" fill="url(#aiGrad)" />
-        <defs>
-           <linearGradient id="aiGrad" x1="24" y1="4" x2="24" y2="44" gradientUnits="userSpaceOnUse">
-              <stop offset="0" stopColor="#4F46E5" />
-              <stop offset="1" stopColor="#818CF8" />
-           </linearGradient>
-        </defs>
-        <path d="M16 24C16 19.5817 19.5817 16 24 16C28.4183 16 32 19.5817 32 24V32H16V24Z" fill="white" fillOpacity="0.2"/>
-        <path d="M24 12V36M12 24H36" stroke="white" strokeWidth="2.5" strokeLinecap="round" opacity="0.8"/>
-        <circle cx="24" cy="24" r="4" fill="white" />
-        <circle cx="32" cy="16" r="3" fill="white" />
-        <circle cx="16" cy="32" r="3" fill="white" />
-     </svg>
-  </div>
-);
-
 export const Tracker: React.FC<Props> = ({ 
   userId, 
   profileName, 
@@ -216,7 +196,7 @@ export const Tracker: React.FC<Props> = ({
   const [showCalculator, setShowCalculator] = useState(false);
   const [showGoalModal, setShowGoalModal] = useState(false);
   const [showCurrencyModal, setShowCurrencyModal] = useState(false);
-  const [showAIChatModal, setShowAIChatModal] = useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
 
   const fetchTransactions = async () => {
     setIsLoading(true);
@@ -453,6 +433,7 @@ export const Tracker: React.FC<Props> = ({
           soundEnabled={soundEnabled} toggleSound={handleToggleSound}
           onClearAllData={onClearAllData} onExportData={onExportData} onImportData={onImportData}
           onOpenShare={() => { setShowSettings(false); setShowShareModal(true); }}
+          onOpenFeedback={() => { setShowSettings(false); setShowFeedbackModal(true); }}
           onLogout={onLogout} isGuest={isGuest} userEmail={userEmail}
         />
         <ProfileManager
@@ -467,8 +448,11 @@ export const Tracker: React.FC<Props> = ({
           transactions={transactions} stats={stats} profileName={activeProfileName}
           currency={currency} language={language} soundEnabled={soundEnabled}
         />
+        <FeedbackModal 
+          isOpen={showFeedbackModal} onClose={() => setShowFeedbackModal(false)}
+          language={language} soundEnabled={soundEnabled}
+        />
         <CalculatorModal isOpen={showCalculator} onClose={() => setShowCalculator(false)} language={language} soundEnabled={soundEnabled} />
-        <AIChatModal isOpen={showAIChatModal} onClose={() => setShowAIChatModal(false)} language={language} soundEnabled={soundEnabled} transactions={transactions} stats={stats} currency={currency} />
         <GoalModal
           isOpen={showGoalModal} onClose={() => setShowGoalModal(false)}
           goals={goals} totalSavings={stats.totalSavings}
@@ -515,7 +499,6 @@ export const Tracker: React.FC<Props> = ({
                  <CustomProfileIcon />
                  {activeProfileId !== 'default' && <div className="absolute -bottom-1 -right-1 bg-indigo-500 rounded-full w-3 h-3 border border-white dark:border-slate-800" />}
                </button>
-               <button onClick={() => { handleClickSound(); setShowAIChatModal(true); }} className="p-1 rounded-full hover:bg-white/50 dark:hover:bg-slate-700/50 transition-all active:scale-95 group" title="AI Chat"><CustomAIChatIcon /></button>
                <button onClick={openCategories} className="p-1 rounded-full hover:bg-white/50 dark:hover:bg-slate-700/50 transition-all active:scale-95 group" title="Categories"><CustomCategoryIcon /></button>
                <button onClick={() => { handleClickSound(); setShowCurrencyModal(true); }} className="p-1 rounded-full hover:bg-white/50 dark:hover:bg-slate-700/50 transition-all active:scale-95 group" title="Change Currency"><CurrencyIcon /></button>
                <button onClick={() => { handleClickSound(); setShowGoalModal(true); }} className="p-1 rounded-full hover:bg-white/50 dark:hover:bg-slate-700/50 transition-all active:scale-95 group" title="Funds & Savings"><CustomWalletIcon /></button>
@@ -535,7 +518,6 @@ export const Tracker: React.FC<Props> = ({
                   language={language} incomeCategories={incomeCategories} expenseCategories={expenseCategories} savingsCategories={savingsCategories}
                   soundEnabled={soundEnabled}
                />
-               <AISuggestion transactions={transactions} stats={stats} language={language} currency={currency} />
             </div>
             <div className="lg:col-span-2 space-y-6 animate-slideUp" style={{ animationDelay: '300ms' }}>
               <div className="flex justify-end">

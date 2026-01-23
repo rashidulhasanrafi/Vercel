@@ -1,28 +1,28 @@
+import { supabase } from '../utils/supabase';
+
+/**
+ * Calls the custom Supabase Edge Function for Gemini AI using the Supabase client.
+ * This handles authentication and CORS automatically.
+ */
 export const callGeminiAI = async (userInput: string): Promise<string> => {
   try {
-    const response = await fetch('https://xyxfyqmmxbmdtxzvmcyl.supabase.co/functions/v1/gemini-ai', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ prompt: userInput }),
+    const { data, error } = await supabase.functions.invoke('gemini-ai', {
+      body: { prompt: userInput },
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to communicate with AI');
+    if (error) {
+      console.error('Supabase Function Error:', error);
+      throw new Error(error.message || 'Failed to communicate with AI');
     }
 
-    const data = await response.json();
-    
-    // The requirement is to take the value of "reply"
+    // Extract the "reply" value from the JSON response
     if (data && typeof data.reply === 'string') {
       return data.reply;
     }
     
-    return "No response received from the assistant.";
+    return "The AI assistant didn't return a valid response.";
   } catch (error: any) {
-    console.error('AI Chat Error:', error);
+    console.error('AI Chat Service Error:', error);
     throw error;
   }
 };

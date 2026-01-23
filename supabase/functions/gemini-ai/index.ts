@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-// Fix: Always use the standard import for GoogleGenAI as per guidelines
+// Always use the correct import from @google/genai as per guidelines
 import { GoogleGenAI } from "@google/genai";
 
 const corsHeaders = {
@@ -20,16 +20,14 @@ serve(async (req) => {
       throw new Error('Prompt is required')
     }
 
-    // Fix: Initialize the Gemini AI client using process.env.API_KEY directly, solving the 'Deno' reference error
+    // Initialize the Gemini AI client using process.env.API_KEY directly as per GenAI guidelines
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
-    // Fix: Use generateContent with the appropriate model name and direct prompt
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-preview',
       contents: prompt,
     });
 
-    // Fix: Extract text directly from the response.text property (not a method)
     const reply = response.text || "No response generated.";
 
     return new Response(
@@ -43,6 +41,7 @@ serve(async (req) => {
       }
     )
   } catch (error: any) {
+    console.error('Edge Function Error:', error.message);
     return new Response(
       JSON.stringify({ error: error.message }),
       {
