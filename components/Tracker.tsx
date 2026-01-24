@@ -15,6 +15,7 @@ import { FeedbackModal } from './FeedbackModal';
 import { NotebookPen, Check, X, UserCircle, Calendar, PieChart } from 'lucide-react';
 import { playSound } from '../utils/sound';
 import { supabase } from '../utils/supabase';
+import { Logo } from './Logo';
 
 interface Props {
   userId: string; 
@@ -491,8 +492,10 @@ export const Tracker: React.FC<Props> = ({
         <header className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-white/30 dark:border-white/10 sticky top-0 z-50 transition-all duration-300 animate-slideDown shadow-sm">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="bg-green-600 p-2 rounded-lg shadow-sm animate-bounce"><NotebookPen className="text-white" size={20} /></div>
-              <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-teal-600 dark:from-green-400 dark:to-teal-400 hidden sm:block">Hisab</h1>
+              <div className="hover:scale-105 transition-transform">
+                <Logo size={40} />
+              </div>
+              <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-purple-600 dark:from-orange-400 dark:to-purple-400 hidden sm:block">Hisab</h1>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
                <button onClick={() => { handleClickSound(); setShowProfileManager(true); }} className="p-1 rounded-full hover:bg-white/50 dark:hover:bg-slate-700/50 transition-all active:scale-95 group relative" title={`Profile: ${activeProfileName}`}>

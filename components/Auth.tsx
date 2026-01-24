@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../utils/supabase';
 import { Loader2, AlertTriangle, User, Mail, Lock, LogIn, ArrowRight } from 'lucide-react';
+import { Logo } from './Logo';
 
 interface Props {
   onGuestLogin?: () => void;
@@ -118,8 +119,14 @@ export const Auth: React.FC<Props> = ({ onGuestLogin }) => {
         ${animateCard ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-12 opacity-0 scale-95'}
       `}>
         
-        <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2 tracking-tight animate-in fade-in slide-in-from-bottom-2 duration-700 delay-100">
+        <div className="text-center mb-8">
+            <div className="flex flex-col items-center justify-center mb-6 animate-in fade-in zoom-in duration-700 delay-100">
+               <Logo size={90} className="drop-shadow-lg mb-2" />
+               <div className="text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-700 to-indigo-700 dark:from-purple-400 dark:to-indigo-400">
+                 H<span className="text-orange-500">i</span>sab
+               </div>
+            </div>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white mb-2 tracking-tight animate-in fade-in slide-in-from-bottom-2 duration-700 delay-100">
               {isSignUp ? 'Create Account' : 'Welcome Back'}
             </h1>
             <p className="text-slate-500 dark:text-slate-400 text-sm font-medium animate-in fade-in slide-in-from-bottom-2 duration-700 delay-200">

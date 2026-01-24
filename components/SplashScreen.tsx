@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BookOpen, Coins, TrendingUp, Receipt, PieChart, NotebookPen, CreditCard, Wallet, Banknote } from 'lucide-react';
+import { Logo } from './Logo';
 
 interface Props {
   onFinish: () => void;
@@ -85,8 +86,8 @@ export const SplashScreen: React.FC<Props> = ({ onFinish, soundEnabled }) => {
 
       {stage === 'reveal' && (
         <div className="flex flex-col items-center animate-logoReveal relative z-20">
-          <div className="bg-green-600 p-6 rounded-3xl shadow-2xl shadow-green-500/20 mb-6">
-            <NotebookPen className="text-white" size={64} />
+          <div className="mb-6 animate-bounce">
+            <Logo size={80} className="drop-shadow-[0_0_20px_rgba(139,92,246,0.4)]" />
           </div>
           <h1 className="text-5xl font-bold text-white tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-400">
             Hisab
