@@ -29,6 +29,11 @@ export const Auth: React.FC<Props> = ({ onGuestLogin }) => {
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email || !password) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setMessage(null);
@@ -40,8 +45,8 @@ export const Auth: React.FC<Props> = ({ onGuestLogin }) => {
           password,
         });
         if (error) throw error;
-        alert('Signup successful! Please check your email for verification.');
-        setIsSignUp(false); // Switch back to login
+        setMessage('Signup successful! Please check your email for verification.');
+        setIsSignUp(false); // Switch back to login view after successful signup
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email,
@@ -50,7 +55,7 @@ export const Auth: React.FC<Props> = ({ onGuestLogin }) => {
         if (error) throw error;
       }
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "An unexpected error occurred during authentication.");
     } finally {
       setLoading(false);
     }
@@ -71,7 +76,7 @@ export const Auth: React.FC<Props> = ({ onGuestLogin }) => {
       if (error) throw error;
       setMessage('Password reset link sent to your email!');
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "Failed to send reset email.");
     } finally {
       setLoading(false);
     }

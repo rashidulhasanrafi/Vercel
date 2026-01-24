@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Tracker } from './Tracker';
 import { Auth } from './Auth';
 import { SplashScreen } from './SplashScreen';
-import { Language, Transaction } from '../types';
-import { Loader2, AlertTriangle, ArrowRight, Trash2 } from 'lucide-react';
+import { Language } from '../types';
+import { Loader2, ArrowRight, Trash2 } from 'lucide-react';
 import { supabase } from '../utils/supabase';
 import { Session } from '@supabase/supabase-js';
 
@@ -21,45 +21,65 @@ const App: React.FC = () => {
   const [isMerging, setIsMerging] = useState(false);
 
   useEffect(() => {
-    // 1. Theme
-    const savedTheme = localStorage.getItem('zenfinance_theme');
-    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      setDarkMode(true);
-      document.documentElement.classList.add('dark');
-    } else {
-      setDarkMode(false);
-      document.documentElement.classList.remove('dark');
-    }
+    // 1. Initialize Preferences (Theme, Language, Sound)
+    const initPreferences = () => {
+      const savedTheme = localStorage.getItem('zenfinance_theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        setDarkMode(true);
+        document.documentElement.classList.add('dark');
+      } else {
+        setDarkMode(false);
+        document.documentElement.classList.remove('dark');
+      }
 
-    // 2. Language
-    const savedLanguage = localStorage.getItem('zenfinance_language');
-    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'bn')) {
-      setLanguage(savedLanguage as Language);
-    }
-    
-    // 3. Sound
-    const savedSound = localStorage.getItem('zenfinance_sound');
-    if (savedSound !== null) {
-      setSoundEnabled(savedSound === 'true');
-    }
+      const savedLanguage = localStorage.getItem('zenfinance_language');
+      if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'bn')) {
+        setLanguage(savedLanguage as Language);
+      }
+      
+      const savedSound = localStorage.getItem('zenfinance_sound');
+      if (savedSound !== null) {
+        setSoundEnabled(savedSound === 'true');
+      }
 
-    // 4. Check Guest Mode Persistence
-    const savedGuestState = localStorage.getItem('zenfinance_is_guest');
-    if (savedGuestState === 'true') {
-      setIsGuest(true);
-    }
+      const savedGuestState = localStorage.getItem('zenfinance_is_guest');
+      if (savedGuestState === 'true') {
+        setIsGuest(true);
+      }
+    };
 
-    // 5. Supabase Session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    initPreferences();
+
+    // 2. Initialize Auth Session
+    const initAuth = async () => {
+        try {
+            // Check for existing session
+            const { data, error } = await supabase.auth.getSession();
+            
+            if (error) {
+                console.warn("Error restoring session:", error.message);
+                // If there's an error (e.g., refresh token invalid), ensure we treat user as logged out
+                setSession(null);
+            } else {
+                setSession(data.session);
+            }
+        } catch (err) {
+            console.error("Unexpected error during auth initialization:", err);
+            // Catch network errors (Failed to fetch) effectively
+            setSession(null);
+        } finally {
+            // ALWAYS resolve loading state
+            setLoading(false);
+        }
+    };
+
+    initAuth();
+
+    // 3. Listen for Auth Changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
-      setLoading(false);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      // If we just logged in, check for guest data
+      
+      // If user logs in, check if they have previous guest data to merge
       if (session) {
         setIsGuest(false);
         localStorage.removeItem('zenfinance_is_guest');
@@ -102,7 +122,6 @@ const App: React.FC = () => {
   // Data Management Functions
   const handleClearAllData = async () => {
     if (isGuest) {
-      // Clear all guest related keys
       Object.keys(localStorage).forEach(key => {
          if (key.includes('guest')) {
              localStorage.removeItem(key);
@@ -114,34 +133,42 @@ const App: React.FC = () => {
 
     if (!session) return;
     
-    const { error } = await supabase
-        .from('transactions')
-        .delete()
-        .eq('user_id', session.user.id);
-    
-    if (error) {
-        console.error('Error clearing data:', error);
-        alert('Failed to clear data: ' + error.message);
-    } else {
-        window.location.reload();
+    try {
+        const { error } = await supabase
+            .from('transactions')
+            .delete()
+            .eq('user_id', session.user.id);
+        
+        if (error) {
+            console.error('Error clearing data:', error);
+            alert('Failed to clear data: ' + error.message);
+        } else {
+            window.location.reload();
+        }
+    } catch (err: any) {
+        console.error("Fetch error during clear:", err);
+        alert("Network error: " + err.message);
     }
   };
 
   const handleExportData = () => {
-    alert("Export feature coming soon for Cloud Sync.");
+    alert("Export feature coming soon.");
   };
 
   const handleImportData = (file: File) => {
-    alert("Import feature coming soon for Cloud Sync.");
+    alert("Import feature coming soon.");
   };
 
   const handleLogout = async () => {
     if (isGuest) {
-      // Leaving guest mode returns to login screen
       setIsGuest(false);
       localStorage.removeItem('zenfinance_is_guest');
     } else {
-      await supabase.auth.signOut();
+      try {
+        await supabase.auth.signOut();
+      } catch (error) {
+        console.error("Error signing out:", error);
+      }
     }
   };
 
@@ -156,7 +183,6 @@ const App: React.FC = () => {
       setIsMerging(true);
       try {
         let allGuestTransactions: any[] = [];
-        // Gather all guest transactions from all potential profiles
         Object.keys(localStorage).forEach(key => {
             if (key.startsWith('zenfinance_transactions_guest_')) {
                 const data = JSON.parse(localStorage.getItem(key) || '[]');
@@ -168,7 +194,6 @@ const App: React.FC = () => {
             const transactionsWithUser = allGuestTransactions.map(t => ({
                 ...t,
                 user_id: session.user.id,
-                // Supabase will handle collisions if UUIDs are used, but usually safe
             }));
 
             const { error } = await supabase.from('transactions').insert(transactionsWithUser);
@@ -182,7 +207,6 @@ const App: React.FC = () => {
       }
     }
 
-    // Cleanup Guest Data (whether merged or discarded)
     Object.keys(localStorage).forEach(key => {
        if (key.includes('_guest')) {
            localStorage.removeItem(key);
