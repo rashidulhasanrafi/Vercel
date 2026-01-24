@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../utils/supabase';
-import { Loader2, AlertTriangle, User, Mail, Lock, LogIn, ArrowRight } from 'lucide-react';
+import { Loader2, AlertTriangle, User, Mail, Lock, LogIn, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { Logo } from './Logo';
 
 interface Props {
@@ -12,6 +12,7 @@ export const Auth: React.FC<Props> = ({ onGuestLogin }) => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // State to toggle visibility
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [animateCard, setAnimateCard] = useState(false);
@@ -25,6 +26,7 @@ export const Auth: React.FC<Props> = ({ onGuestLogin }) => {
   useEffect(() => {
     setError(null);
     setMessage(null);
+    setShowPassword(false); // Reset visibility on mode switch
   }, [isSignUp]);
 
   const handleAuth = async (e: React.FormEvent) => {
@@ -161,13 +163,20 @@ export const Auth: React.FC<Props> = ({ onGuestLogin }) => {
                   <Lock size={20} />
                </div>
                <input 
-                 type="password" 
+                 type={showPassword ? "text" : "password"} 
                  value={password}
                  onChange={(e) => setPassword(e.target.value)}
                  required
                  placeholder="Password"
-                 className="w-full pl-14 pr-5 py-4 bg-white/60 dark:bg-slate-900/60 border border-transparent group-hover:border-orange-200 dark:group-hover:border-orange-800/50 focus:border-orange-400 dark:focus:border-orange-500 rounded-2xl outline-none text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all shadow-sm focus:shadow-lg focus:shadow-orange-100/50 dark:focus:shadow-none font-medium"
+                 className="w-full pl-14 pr-12 py-4 bg-white/60 dark:bg-slate-900/60 border border-transparent group-hover:border-orange-200 dark:group-hover:border-orange-800/50 focus:border-orange-400 dark:focus:border-orange-500 rounded-2xl outline-none text-slate-800 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all shadow-sm focus:shadow-lg focus:shadow-orange-100/50 dark:focus:shadow-none font-medium"
                />
+               <button
+                 type="button"
+                 onClick={() => setShowPassword(!showPassword)}
+                 className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 transition-colors cursor-pointer"
+               >
+                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+               </button>
             </div>
             
             {!isSignUp && (
