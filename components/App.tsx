@@ -14,6 +14,7 @@ const App: React.FC = () => {
   const [language, setLanguage] = useState<Language>('en');
   const [darkMode, setDarkMode] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [liquidGlass, setLiquidGlass] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
   
   // Merge State
@@ -40,6 +41,15 @@ const App: React.FC = () => {
       const savedSound = localStorage.getItem('zenfinance_sound');
       if (savedSound !== null) {
         setSoundEnabled(savedSound === 'true');
+      }
+
+      const savedLiquidGlass = localStorage.getItem('zenfinance_liquid_glass');
+      if (savedLiquidGlass === 'true') {
+        setLiquidGlass(true);
+        document.documentElement.classList.add('liquid-glass-mode');
+      } else {
+        setLiquidGlass(false);
+        document.documentElement.classList.remove('liquid-glass-mode');
       }
 
       const savedGuestState = localStorage.getItem('zenfinance_is_guest');
@@ -117,6 +127,17 @@ const App: React.FC = () => {
     const newState = !soundEnabled;
     setSoundEnabled(newState);
     localStorage.setItem('zenfinance_sound', String(newState));
+  };
+
+  const toggleLiquidGlass = () => {
+    const newVal = !liquidGlass;
+    setLiquidGlass(newVal);
+    localStorage.setItem('zenfinance_liquid_glass', String(newVal));
+    if (newVal) {
+      document.documentElement.classList.add('liquid-glass-mode');
+    } else {
+      document.documentElement.classList.remove('liquid-glass-mode');
+    }
   };
 
   // Data Management Functions
@@ -252,6 +273,8 @@ const App: React.FC = () => {
           toggleDarkMode={toggleDarkMode}
           soundEnabled={soundEnabled}
           toggleSound={toggleSound}
+          liquidGlass={liquidGlass}
+          toggleLiquidGlass={toggleLiquidGlass}
           onClearAllData={handleClearAllData}
           onExportData={handleExportData}
           onImportData={handleImportData}

@@ -7,7 +7,7 @@ import {
   LogIn, User, Coffee, Home, Bus, Zap, ShoppingBag, Stethoscope, GraduationCap, DollarSign, 
   TrendingUp, Gift, Briefcase, HelpCircle, Plane, Shield, RefreshCw, Smile, Heart, Landmark, 
   Percent, Award, Building2, RotateCcw, CreditCard, Tag, PiggyBank, Coins, Banknote, Gem, 
-  BarChart3, Lock, ArrowDownLeft, Wallet, Check, ChevronDown, MessageSquare
+  BarChart3, Lock, ArrowDownLeft, Wallet, Check, ChevronDown, MessageSquare, Sparkles
 } from 'lucide-react';
 import { playSound } from '../utils/sound';
 import { safeCopy } from '../utils/clipboard';
@@ -29,6 +29,8 @@ interface Props {
   toggleDarkMode: () => void;
   soundEnabled: boolean;
   toggleSound: () => void;
+  liquidGlass: boolean;
+  toggleLiquidGlass: () => void;
   // Data Management
   onClearAllData: () => void;
   onExportData: () => void;
@@ -112,6 +114,8 @@ export const CategorySettings: React.FC<Props> = ({
   toggleDarkMode,
   soundEnabled,
   toggleSound,
+  liquidGlass,
+  toggleLiquidGlass,
   onClearAllData,
   onExportData,
   onImportData,
@@ -225,16 +229,38 @@ export const CategorySettings: React.FC<Props> = ({
 
                 <div>
                   <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">{t.appearance}</h4>
-                  <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-lg">
-                        {darkMode ? <Moon size={18} /> : <Sun size={18} />}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-lg">
+                          {darkMode ? <Moon size={18} /> : <Sun size={18} />}
+                        </div>
+                        <span className="font-medium text-slate-700 dark:text-slate-200 text-sm">{t.darkMode}</span>
                       </div>
-                      <span className="font-medium text-slate-700 dark:text-slate-200 text-sm">{t.darkMode}</span>
+                      <button onClick={() => { playClick(); toggleDarkMode(); }} className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${darkMode ? 'bg-indigo-600' : 'bg-slate-300'}`}>
+                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${darkMode ? 'translate-x-6' : 'translate-x-1'}`} />
+                      </button>
                     </div>
-                    <button onClick={() => { playClick(); toggleDarkMode(); }} className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${darkMode ? 'bg-indigo-600' : 'bg-slate-300'}`}>
-                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${darkMode ? 'translate-x-6' : 'translate-x-1'}`} />
-                    </button>
+
+                    {/* Liquid Glass Option */}
+                    <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 rounded-lg">
+                          <Sparkles size={18} />
+                        </div>
+                        <div className="flex flex-col text-left">
+                          <span className="font-medium text-slate-700 dark:text-slate-200 text-sm">
+                            {language === 'bn' ? 'লিকুইড গ্লাস মোড' : 'Liquid Glass'}
+                          </span>
+                          <span className="text-[10px] text-slate-400">
+                            {language === 'bn' ? 'কাঁচের উইন্ডো এবং ইফেক্ট' : 'Frosted glass look & animation'}
+                          </span>
+                        </div>
+                      </div>
+                      <button onClick={() => { playClick(); toggleLiquidGlass(); }} className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${liquidGlass ? 'bg-pink-500' : 'bg-slate-300'}`}>
+                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${liquidGlass ? 'translate-x-6' : 'translate-x-1'}`} />
+                      </button>
+                    </div>
                   </div>
                 </div>
 

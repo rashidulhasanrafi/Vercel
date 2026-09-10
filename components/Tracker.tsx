@@ -28,6 +28,8 @@ interface Props {
   toggleDarkMode: () => void;
   soundEnabled: boolean;
   toggleSound: () => void;
+  liquidGlass: boolean;
+  toggleLiquidGlass: () => void;
   onClearAllData: () => void;
   onExportData: () => void;
   onImportData: (file: File) => void;
@@ -147,6 +149,8 @@ export const Tracker: React.FC<Props> = ({
   toggleDarkMode,
   soundEnabled,
   toggleSound,
+  liquidGlass,
+  toggleLiquidGlass,
   onClearAllData,
   onExportData,
   onImportData
@@ -420,9 +424,9 @@ export const Tracker: React.FC<Props> = ({
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300 flex flex-col relative">
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-400/20 blur-[120px] dark:bg-blue-600/10" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-400/20 blur-[120px] dark:bg-emerald-600/10" />
-        <div className="absolute top-[40%] left-[40%] w-[40%] h-[40%] rounded-full bg-violet-400/20 blur-[120px] dark:bg-violet-600/10" />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-400/25 blur-[120px] dark:bg-blue-600/15 float-blob-1" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-400/25 blur-[120px] dark:bg-emerald-600/15 float-blob-2" />
+        <div className="absolute top-[40%] left-[40%] w-[40%] h-[40%] rounded-full bg-violet-400/25 blur-[120px] dark:bg-violet-600/15 float-blob-3" />
       </div>
       <div className="relative z-10 flex flex-col flex-grow">
         <CategorySettings 
@@ -432,6 +436,7 @@ export const Tracker: React.FC<Props> = ({
           language={language} onLanguageChange={(lang) => { handleClickSound(); onLanguageChange(lang); }}
           darkMode={darkMode} toggleDarkMode={() => { handleClickSound(); toggleDarkMode(); }}
           soundEnabled={soundEnabled} toggleSound={handleToggleSound}
+          liquidGlass={liquidGlass} toggleLiquidGlass={toggleLiquidGlass}
           onClearAllData={onClearAllData} onExportData={onExportData} onImportData={onImportData}
           onOpenShare={() => { setShowSettings(false); setShowShareModal(true); }}
           onOpenFeedback={() => { setShowSettings(false); setShowFeedbackModal(true); }}
